@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-16"?>
+<LetsPlay>
+  <Playlist>
+    <StartingTime>18:32:00</StartingTime>
+    <SongNumber>2</SongNumber>
+    <SongDurationInSecounds>10</SongDurationInSecounds>
+  </Playlist>
+  <Playlist>
+    <StartingTime>15:06:00</StartingTime>
+    <SongNumber>3</SongNumber>
+    <SongDurationInSecounds>10</SongDurationInSecounds>
+  </Playlist>
+  <Playlist>
+    <StartingTime>20:45:00</StartingTime>
+    <SongNumber>1</SongNumber>
+    <SongDurationInSecounds>10</SongDurationInSecounds>
+  </Playlist>
+</LetsPlay>
