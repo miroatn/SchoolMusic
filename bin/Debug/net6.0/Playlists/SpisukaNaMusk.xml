@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-16"?>
+<SpisukaNaMusk>
+  <Playlist>
+    <StartingTime>11:45:00</StartingTime>
+    <SongNumber>1</SongNumber>
+    <SongDurationInSecounds>10</SongDurationInSecounds>
+  </Playlist>
+  <Playlist>
+    <StartingTime>14:42:00</StartingTime>
+    <SongNumber>4</SongNumber>
+    <SongDurationInSecounds>120</SongDurationInSecounds>
+  </Playlist>
+  <Playlist>
+    <StartingTime>14:45:00</StartingTime>
+    <SongNumber>5</SongNumber>
+    <SongDurationInSecounds>120</SongDurationInSecounds>
+  </Playlist>
+  <Playlist>
+    <StartingTime>14:47:00</StartingTime>
+    <SongNumber>6</SongNumber>
+    <SongDurationInSecounds>120</SongDurationInSecounds>
+  </Playlist>
+</SpisukaNaMusk>

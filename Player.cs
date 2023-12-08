@@ -26,6 +26,8 @@ namespace SchoolMusic
 
             }
 
+            player.controls.stop();
+
         }
 
         public static Dictionary<TimeOnly, Song> SetSchedule(int count)
@@ -91,20 +93,23 @@ namespace SchoolMusic
 
         public static void PlaySchedule(Dictionary<TimeOnly, Song> schedule)
         {
+            bool isReady = false;
+
             for (int i = 0, j = 0, k = 0; i < schedule.Count;)
             {
                 TimeOnly dateTime = schedule.ElementAt(i).Key;
                 Song song = schedule.ElementAt(i).Value;
 
+                if (dateTime < TimeOnly.FromDateTime(DateTime.Now) && isReady == false)
+                {
+                    i++;
+                    continue;
+                }
+
+                isReady = true;
+
                 while (true)
                 {
-
-                    if (dateTime.Minute < TimeOnly.FromDateTime(DateTime.Now).Minute ||
-                        dateTime.Hour < TimeOnly.FromDateTime(DateTime.Now).Hour)
-                    {
-                        i++;
-                        break;
-                    }
 
                     if (j == k)
                     {
@@ -127,13 +132,12 @@ namespace SchoolMusic
             }
         }
 
-        public static void CreatePlaylist(Dictionary<TimeOnly, Song> schedule)
+        public static Dictionary<TimeOnly, Song> CreatePlaylist(Dictionary<TimeOnly, Song> schedule)
         {
             Console.WriteLine("Въведе бройката на песните, които ще се стартират.");
             int count = int.Parse(Console.ReadLine());
             schedule = SetSchedule(count);
             schedule = schedule.OrderBy(x => x.Key).ToDictionary(x => x.Key, x => x.Value);
-
 
             //Saving the playlist in XML file.
             Console.WriteLine("Ако желаете този плейлист да бъде запазен натиснете 1, в противен случай натиснете 2");
@@ -149,6 +153,8 @@ namespace SchoolMusic
                 Serializer.SerializeSchedule(schedule, playlistName);
                 Console.WriteLine($"Плейлист с име {playlistName} беше успешно създаден!");
             }
+
+            return schedule;
         }
 
 

@@ -1,6 +1,7 @@
 ﻿using SchoolMusic;
 using SchoolMusic.DataProcesor;
 using SchoolMusic.DataProcesor.ExportDTO;
+using SchoolMusic.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -12,6 +13,9 @@ internal class Program
 {
     private static void Main(string[] args)
     {
+        Console.WriteLine(LogoMaker.Make());
+        Console.WriteLine();
+
         Console.OutputEncoding = Encoding.UTF8;
         Dictionary<TimeOnly, Song> schedule = new();
 
@@ -36,7 +40,7 @@ internal class Program
         }
         else if (decision == 2)
         {
-            Player.CreatePlaylist(schedule);
+           schedule = Player.CreatePlaylist(schedule);
         }
 
 
