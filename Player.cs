@@ -1,4 +1,5 @@
-﻿using SchoolMusic.DataProcesor;
+﻿using SchoolMusic.Common;
+using SchoolMusic.DataProcesor;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,45 @@ namespace SchoolMusic
 {
     public class Player
     {
+        public static Dictionary<TimeOnly, Song> ChoosePlaylist()
+        {
+            while (true)
+            {
+                string[] playLists = Directory.GetFiles(@".\Playlists");
+                Console.WriteLine(Messages.ChooseList);
+
+                Dictionary<int, string> availablePlaylists = new();
+
+                for (int i = 1; i <= playLists.Length; i++)
+                {
+                    string playListName = Path.GetFileNameWithoutExtension(playLists[i - 1]);
+                    availablePlaylists.Add(i, playListName);
+                    Console.WriteLine($"{i}. {playListName}");
+                }
+
+                ConsoleKeyInfo chosenNumber = Console.ReadKey();
+                Console.WriteLine();
+
+                if (!char.IsDigit(chosenNumber.KeyChar))
+                {
+                    Console.WriteLine(Messages.InvalidNumber);
+                    continue;
+                }
+
+                string chosenPlaylist = availablePlaylists.FirstOrDefault(ap => ap.Key == int.Parse(chosenNumber.KeyChar.ToString())).Value;
+
+                if (chosenPlaylist == null)
+                {
+                    Console.WriteLine(Messages.InvalidNumber);
+                    continue;
+                }
+                else
+                {
+                    return Deserializer.Deserialize(chosenPlaylist);
+                }
+            }
+        }
+
         public static void PlaySong(int number, int duration)
         {
             WMPLib.WindowsMediaPlayer player = new WMPLib.WindowsMediaPlayer();
@@ -32,9 +72,7 @@ namespace SchoolMusic
 
         public static Dictionary<TimeOnly, Song> SetSchedule(int count)
         {
-            const string wrongHourError = "Имате грешка във формата на въведения час! Моля опитайте отново.";
-            const string wrongNumberOrLength = "Имате грешка във формата, опитайте отново";
-
+            
             Dictionary<TimeOnly, Song> result = new();
 
             for (int i = 0; i < count; i++)
@@ -46,7 +84,7 @@ namespace SchoolMusic
                 {
                     try
                     {
-                        Console.WriteLine("Моля въведете часа, в който искате да се стартира песента във формат час:минути:секунди. Пример: 10:21:00");
+                        Console.WriteLine(Messages.StartingHourMsg);
                         string[] input = Console.ReadLine().Split(':');
                         int hours = int.Parse(input[0]);
                         int minutes = int.Parse(input[1]);
@@ -66,7 +104,7 @@ namespace SchoolMusic
                     }
                     catch (Exception)
                     {
-                        Console.WriteLine(wrongHourError);
+                        Console.WriteLine(Messages.WrongHourError);
                         continue;
                     }
 
@@ -76,7 +114,7 @@ namespace SchoolMusic
                 {
                     try
                     {
-                        Console.WriteLine("Моля въведете номера на песента и продължителността ѝ в секунди. Пример 1,120");
+                        Console.WriteLine(Messages.SongNumberAndLengthMsg);
 
                         string[] numberAndLength = Console.ReadLine().Split(',');
 
@@ -95,7 +133,7 @@ namespace SchoolMusic
                     }
                     catch (Exception)
                     {
-                        Console.WriteLine(wrongNumberOrLength);
+                        Console.WriteLine(Messages.WrongNumberOrLength);
                         continue;
                     }
                 }
@@ -127,7 +165,7 @@ namespace SchoolMusic
 
                     if (j == k)
                     {
-                        Console.WriteLine($"Следващата песен ще започне в {dateTime}.");
+                        Console.WriteLine(string.Format(Messages.NextSongStartingTime, dateTime));
                         k++;
                     }
 
@@ -148,27 +186,25 @@ namespace SchoolMusic
 
         public static Dictionary<TimeOnly, Song> CreatePlaylist(Dictionary<TimeOnly, Song> schedule)
         {
-            const string wrongInput = "Въведения вход е с грешен формат! Опитайте отново.";
-            const string existingPlaylistName = "Въведеното име за плейлист вече съществува. Изберете друго.";
-
+          
             while (true)
             {
                 try
                 {
-                    Console.WriteLine("Въведе бройката на песните, които ще се стартират.");
+                    Console.WriteLine(Messages.SongsCountMsg);
                     int count = int.Parse(Console.ReadLine());
                     schedule = SetSchedule(count);
                     schedule = schedule.OrderBy(x => x.Key).ToDictionary(x => x.Key, x => x.Value);
 
                     //Saving the playlist in XML file.
-                    Console.WriteLine("Ако желаете този плейлист да бъде запазен натиснете 1, в противен случай натиснете 2");
+                    Console.WriteLine(Messages.SavePlaylistMsg);
                     int answer = int.Parse(Console.ReadLine());
 
                     if (answer == 1)
                     {
                         while (true)
                         {
-                            Console.WriteLine("Въведете име на плейлиста.");
+                            Console.WriteLine(Messages.NamingPlaylistMsg);
 
                             string playlistName = Console.ReadLine();
 
@@ -183,12 +219,12 @@ namespace SchoolMusic
 
                             if (convertedPlaylist.Any(cp => cp == playlistName))
                             {
-                                Console.WriteLine(existingPlaylistName);
+                                Console.WriteLine(Messages.ExistingPlaylistName);
                                 continue;
                             }
 
                             Serializer.SerializeSchedule(schedule, playlistName);
-                            Console.WriteLine($"Плейлист с име {playlistName} беше успешно създаден!");
+                            Console.WriteLine(string.Format(Messages.SuccessfullyCreatedPlaylist, playlistName));
                             break;
                         }
                     }
@@ -197,7 +233,7 @@ namespace SchoolMusic
                 }
                 catch (Exception)
                 {
-                    Console.WriteLine(wrongInput);
+                    Console.WriteLine(Messages.WrongInput);
                     continue;
                 }
             }

@@ -1,4 +1,5 @@
 ﻿using SchoolMusic;
+using SchoolMusic.Common;
 using SchoolMusic.DataProcesor;
 using SchoolMusic.DataProcesor.ExportDTO;
 using SchoolMusic.Utilities;
@@ -14,8 +15,6 @@ internal class Program
 {
     private static void Main(string[] args)
     {
-        const string wrongInput = "Имате грешка във формата, опитайте отново";
-
         Console.WriteLine(LogoMaker.Make());
         Console.WriteLine();
 
@@ -26,38 +25,30 @@ internal class Program
         {
             try
             {
-                Console.WriteLine("Ако искате да използвате готов плейлист натиснете 1.\r\nАко искате да създадете нов плейлист натиснете 2.");
+                Console.WriteLine(Messages.StartingMenu);
+                ConsoleKeyInfo decision = Console.ReadKey();
+                Console.WriteLine();
 
-                int decision = int.Parse(Console.ReadLine());
-
-                if (decision == 1)
+                if (decision.Key == ConsoleKey.D1)
                 {
-                    string[] playLists = Directory.GetFiles(@".\Playlists");
-                    Console.WriteLine("Изберете от списъка с плейлисти и въведете името на плейлиста, който желаете да се стартира.");
-
-                    for (int i = 0; i < playLists.Length; i++)
-                    {
-                        string playList = Path.GetFileNameWithoutExtension(playLists[i]);
-
-                        Console.WriteLine($"{i + 1}. {playList}");
-                    }
-
-                    string playlistName = Console.ReadLine();
-                    schedule = Deserializer.Deserialize(playlistName);
+                    schedule = Player.ChoosePlaylist();
                 }
-                else if (decision == 2)
+                else if (decision.Key == ConsoleKey.D2)
                 {
                     schedule = Player.CreatePlaylist(schedule);
                 }
-
+                else
+                {
+                    throw new Exception();
+                }
 
                 Player.PlaySchedule(schedule);
-                Console.WriteLine("Всички песни бяха изпълнени за деня!");
+                Console.WriteLine(Messages.EndMessage);
                 break;
             }
             catch (Exception)
             {
-                Console.WriteLine(wrongInput);
+                Console.WriteLine(Messages.WrongInput);
                 continue;
             }
         }
