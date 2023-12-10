@@ -31,7 +31,7 @@ namespace SchoolMusic.Common
         //Program - Main
 
         public const string StartingMenu = "Ако искате да използвате готов плейлист натиснете 1.\r\nАко искате да създадете нов плейлист натиснете 2.";
-        public const string ChooseList = "Изберете от списъка с плейлисти и въведете името на плейлиста, който желаете да се стартира.";
+        public const string ChooseList = "Изберете от списъка с плейлисти и въведете номера на плейлиста, който желаете да се стартира.";
 
         public const string EndMessage = "Всички песни бяха изпълнени за деня!";
 
