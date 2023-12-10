@@ -18,3 +18,4 @@ C:\Users\MiroPC\source\repos\SchoolMusic\SchoolMusic\obj\Debug\net6.0\SchoolMusi
 C:\Users\MiroPC\source\repos\SchoolMusic\SchoolMusic\obj\Debug\net6.0\ref\SchoolMusic.dll
 C:\Users\MiroPC\source\repos\SchoolMusic\SchoolMusic\obj\Debug\net6.0\Interop.WMPLib.dll
 C:\Users\MiroPC\source\repos\SchoolMusic\SchoolMusic\obj\Debug\net6.0\SchoolMusic.csproj.ResolveComReference.cache
+C:\Users\MiroPC\source\repos\SchoolMusic\SchoolMusic\bin\Debug\net6.0\taglib-sharp.dll

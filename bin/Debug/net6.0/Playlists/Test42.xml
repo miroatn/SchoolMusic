@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-16"?>
+<Test42>
+  <Playlist>
+    <StartingTime>16:24:10</StartingTime>
+    <SongNumber>4</SongNumber>
+    <SongDurationInSecounds>180</SongDurationInSecounds>
+  </Playlist>
+  <Playlist>
+    <StartingTime>16:27:10</StartingTime>
+    <SongNumber>5</SongNumber>
+    <SongDurationInSecounds>130</SongDurationInSecounds>
+  </Playlist>
+  <Playlist>
+    <StartingTime>16:29:20</StartingTime>
+    <SongNumber>6</SongNumber>
+    <SongDurationInSecounds>250</SongDurationInSecounds>
+  </Playlist>
+</Test42>

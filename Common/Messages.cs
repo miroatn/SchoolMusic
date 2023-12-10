@@ -13,8 +13,10 @@ namespace SchoolMusic.Common
         public const string WrongHourError = "Имате грешка във формата на въведения час! Моля опитайте отново.";
         public const string WrongNumberOrLength = "Имате грешка във формата, опитайте отново";
         public const string StartingHourMsg = "Моля въведете часа, в който искате да се стартира песента във формат час:минути:секунди. Пример: 10:21:00";
-        public const string SongNumberAndLengthMsg = "Моля въведете номера на песента и продължителността ѝ в секунди. Пример 1,120";
+        public const string SongNumberMsg = "Моля въведете номера на песента. Пример: 1";
+        public const string SongLengthMsg = "Моля въведете времетраенето, което искате песента да продължи.";
 
+        public const string SongLengthInSecounds = "Песента, която избрахте е с продължителност {0} секунди";
         public const string NextAvaliableTiming = "Следващия свободен час е в {0}";
         public const string TimingAlreadyExist = "Въведения час вече е зает. Опитайте отново.";
 

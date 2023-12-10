@@ -221,13 +221,15 @@ namespace SchoolMusic
                 {
                     try
                     {
-                        Console.WriteLine(Messages.SongNumberAndLengthMsg);
 
-                        string[] numberAndLength = Console.ReadLine().Split(',');
+                        Console.WriteLine(Messages.SongNumberMsg);
+                        int songNumber = int.Parse(Console.ReadLine());
+                        var file = TagLib.File.Create($@"Music/{songNumber}.mp3");
+                        Console.WriteLine(string.Format(Messages.SongLengthInSecounds, file.Properties.Duration.TotalSeconds.ToString("F0")));
 
-                        int number = int.Parse(numberAndLength[0]);
-                        int length = int.Parse(numberAndLength[1]);
-                        song.Number = number;
+                        Console.WriteLine(Messages.SongLengthMsg);
+                        int length = int.Parse(Console.ReadLine());
+                        song.Number = songNumber;
                         song.DurationInSecounds = length;
 
                         if (!result.Keys.Contains(dateTime))
@@ -235,7 +237,7 @@ namespace SchoolMusic
                             result.Add(dateTime, song);
 
                             // Printing next free timing for a song
-                            double dLength = double.Parse(numberAndLength[1]);
+                            double dLength = double.Parse(length.ToString());
                             TimeOnly nextFreeTiming = TimeOnlyExtensions.AddSeconds(dateTime, dLength);
                             Console.WriteLine(string.Format(Messages.NextAvaliableTiming, nextFreeTiming.ToString("HH:mm:ss")));
                             break;

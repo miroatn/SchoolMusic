@@ -15,6 +15,7 @@ internal class Program
 {
     private static void Main(string[] args)
     {
+
         Console.WriteLine(LogoMaker.Make());
         Console.WriteLine();
 

@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "zJ+cCvdeXOzqg1xQ2uvpfhhJBLviEXzGp6GdKU+2wb7E2OlvS3EXIQmjDZSCDSBSstfzZdMXSRRWpD9SpJWnBQ==",
+  "dgSpecHash": "cKm6HedablNgxexhS6Ul0hHFZGuQ3mxoMdVCapWngoVEQlmc69XBZCZa+K1rLMV4ZJKZq8PemPDjrQ0nsMZ3wA==",
   "success": true,
   "projectFilePath": "C:\\Users\\MiroPC\\source\\repos\\SchoolMusic\\SchoolMusic\\SchoolMusic.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\MiroPC\\.nuget\\packages\\system.windows.extensions\\8.0.0\\system.windows.extensions.8.0.0.nupkg.sha512"
+    "C:\\Users\\MiroPC\\.nuget\\packages\\system.windows.extensions\\8.0.0\\system.windows.extensions.8.0.0.nupkg.sha512",
+    "C:\\Users\\MiroPC\\.nuget\\packages\\taglib-sharp-netstandard2.0\\2.1.0\\taglib-sharp-netstandard2.0.2.1.0.nupkg.sha512"
   ],
   "logs": []
 }
