@@ -1,5 +1,6 @@
 ﻿using SchoolMusic.Common;
 using SchoolMusic.DataProcesor;
+using SchoolMusic.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -70,84 +71,12 @@ namespace SchoolMusic
 
         }
 
-        public static Dictionary<TimeOnly, Song> SetSchedule(int count)
-        {
-            
-            Dictionary<TimeOnly, Song> result = new();
-
-            for (int i = 0; i < count; i++)
-            {
-                TimeOnly dateTime = new();
-                Song song = new Song();
-                // Adding the starting time for song
-                while (true)
-                {
-                    try
-                    {
-                        Console.WriteLine(Messages.StartingHourMsg);
-                        string[] input = Console.ReadLine().Split(':');
-                        int hours = int.Parse(input[0]);
-                        int minutes = int.Parse(input[1]);
-                        int seconds = int.Parse(input[2]);
-
-                        if (input.Length == 0 ||
-                           (hours > 24 || hours < 0) ||
-                           (minutes > 60 || minutes < 0) ||
-                           (seconds > 60 || seconds < 0))
-                        {
-                            throw new Exception();
-                        }
-
-                        dateTime = new TimeOnly(hours, minutes, seconds);
-                        break;
-
-                    }
-                    catch (Exception)
-                    {
-                        Console.WriteLine(Messages.WrongHourError);
-                        continue;
-                    }
-
-                }
-
-                while (true)
-                {
-                    try
-                    {
-                        Console.WriteLine(Messages.SongNumberAndLengthMsg);
-
-                        string[] numberAndLength = Console.ReadLine().Split(',');
-
-                        int number = int.Parse(numberAndLength[0]);
-                        int length = int.Parse(numberAndLength[1]);
-
-                        song.Number = number;
-                        song.DurationInSecounds = length;
-
-
-                        if (!result.Keys.Contains(dateTime))
-                        {
-                            result.Add(dateTime, song);
-                            break;
-                        }
-                    }
-                    catch (Exception)
-                    {
-                        Console.WriteLine(Messages.WrongNumberOrLength);
-                        continue;
-                    }
-                }
-
-            }
-
-            return result;
-        }
-
         public static void PlaySchedule(Dictionary<TimeOnly, Song> schedule)
         {
             bool isReady = false;
+            bool isPrinted = false;
 
-            for (int i = 0, j = 0, k = 0; i < schedule.Count;)
+            for (int i = 0; i < schedule.Count;)
             {
                 TimeOnly dateTime = schedule.ElementAt(i).Key;
                 Song song = schedule.ElementAt(i).Value;
@@ -163,10 +92,10 @@ namespace SchoolMusic
                 while (true)
                 {
 
-                    if (j == k)
+                    if (!isPrinted)
                     {
-                        Console.WriteLine(string.Format(Messages.NextSongStartingTime, dateTime));
-                        k++;
+                        Console.WriteLine(string.Format(Messages.NextSongStartingTime, dateTime.ToString("HH:mm:ss")));
+                        isPrinted = true;
                     }
 
                     if (TimeOnly.FromDateTime(DateTime.Now) >= dateTime)
@@ -174,13 +103,12 @@ namespace SchoolMusic
                         PlaySong(song.Number, song.DurationInSecounds);
 
                         i++;
-                        j++;
+                        isPrinted = false;
                         break;
                     }
 
                     System.Threading.Thread.Sleep(1000);
                 }
-
             }
         }
 
@@ -198,9 +126,11 @@ namespace SchoolMusic
 
                     //Saving the playlist in XML file.
                     Console.WriteLine(Messages.SavePlaylistMsg);
-                    int answer = int.Parse(Console.ReadLine());
 
-                    if (answer == 1)
+                    ConsoleKeyInfo decision = Console.ReadKey();
+                    Console.WriteLine();
+
+                    if (decision.Key == ConsoleKey.D1)
                     {
                         while (true)
                         {
@@ -238,6 +168,90 @@ namespace SchoolMusic
                 }
             }
 
+        }
+
+        public static Dictionary<TimeOnly, Song> SetSchedule(int count)
+        {
+
+            Dictionary<TimeOnly, Song> result = new();
+
+            for (int i = 0; i < count; i++)
+            {
+                TimeOnly dateTime = new();
+                Song song = new Song();
+                // Adding the starting time for song
+                while (true)
+                {
+                    try
+                    {
+                        Console.WriteLine(Messages.StartingHourMsg);
+                        string[] input = Console.ReadLine().Split(':');
+                        int hours = int.Parse(input[0]);
+                        int minutes = int.Parse(input[1]);
+                        int seconds = int.Parse(input[2]);
+
+                        if (input.Length == 0 ||
+                           (hours > 24 || hours < 0) ||
+                           (minutes > 60 || minutes < 0) ||
+                           (seconds > 60 || seconds < 0))
+                        {
+                            throw new Exception();
+                        }
+
+                        dateTime = new TimeOnly(hours, minutes, seconds);
+
+                        if (result.Keys.Contains(dateTime))
+                        {
+                            Console.WriteLine(Messages.TimingAlreadyExist);
+                            continue;
+                        }
+
+                        break;
+
+                    }
+                    catch (Exception)
+                    {
+                        Console.WriteLine(Messages.WrongHourError);
+                        continue;
+                    }
+
+                }
+
+                while (true)
+                {
+                    try
+                    {
+                        Console.WriteLine(Messages.SongNumberAndLengthMsg);
+
+                        string[] numberAndLength = Console.ReadLine().Split(',');
+
+                        int number = int.Parse(numberAndLength[0]);
+                        int length = int.Parse(numberAndLength[1]);
+                        song.Number = number;
+                        song.DurationInSecounds = length;
+
+                        if (!result.Keys.Contains(dateTime))
+                        {
+                            result.Add(dateTime, song);
+
+                            // Printing next free timing for a song
+                            double dLength = double.Parse(numberAndLength[1]);
+                            TimeOnly nextFreeTiming = TimeOnlyExtensions.AddSeconds(dateTime, dLength);
+                            Console.WriteLine(string.Format(Messages.NextAvaliableTiming, nextFreeTiming.ToString("HH:mm:ss")));
+                            break;
+                        }
+
+                    }
+                    catch (Exception)
+                    {
+                        Console.WriteLine(Messages.WrongNumberOrLength);
+                        continue;
+                    }
+                }
+
+            }
+
+            return result;
         }
 
     }

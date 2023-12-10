@@ -15,6 +15,9 @@ namespace SchoolMusic.Common
         public const string StartingHourMsg = "Моля въведете часа, в който искате да се стартира песента във формат час:минути:секунди. Пример: 10:21:00";
         public const string SongNumberAndLengthMsg = "Моля въведете номера на песента и продължителността ѝ в секунди. Пример 1,120";
 
+        public const string NextAvaliableTiming = "Следващия свободен час е в {0}";
+        public const string TimingAlreadyExist = "Въведения час вече е зает. Опитайте отново.";
+
         //Player - CreatePlayList
 
         public const string WrongInput = "Въведения вход е с грешен формат! Опитайте отново.";
