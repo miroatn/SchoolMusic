@@ -174,9 +174,15 @@ namespace SchoolMusic
         {
 
             Dictionary<TimeOnly, Song> result = new();
+            bool isBreak = false;
 
             for (int i = 0; i < count; i++)
             {
+                if (isBreak)
+                {
+                    break;
+                }
+
                 TimeOnly dateTime = new();
                 Song song = new Song();
                 // Adding the starting time for song
@@ -184,8 +190,16 @@ namespace SchoolMusic
                 {
                     try
                     {
+                        Console.WriteLine(Messages.EndTheCreation);
                         Console.WriteLine(Messages.StartingHourMsg);
                         string[] input = Console.ReadLine().Split(':');
+
+                        if (input[0].ToLower() == "end")
+                        {
+                            isBreak = true;
+                            break;
+                        }
+
                         int hours = int.Parse(input[0]);
                         int minutes = int.Parse(input[1]);
                         int seconds = int.Parse(input[2]);
@@ -221,6 +235,11 @@ namespace SchoolMusic
                 {
                     try
                     {
+
+                        if (isBreak == true)
+                        {
+                            break;
+                        }
 
                         Console.WriteLine(Messages.SongNumberMsg);
                         int songNumber = int.Parse(Console.ReadLine());
